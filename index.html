@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>親密依附小測驗：你是怎麼靠近一個人的？ — Human Space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;600&family=Lora:ital,wght@0,400;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF6EA;
+    --paper-deep:#F3EAD4;
+    --ink:#3A342A;
+    --ink-soft:rgba(58,52,42,0.62);
+    --ink-faint:rgba(58,52,42,0.32);
+    --slate:#5C7A99;
+    --slate-deep:#3F5C79;
+    --mauve:#C98FA0;
+    --mauve-deep:#A8677A;
+    --mustard:#E7B94A;
+    --coral:#D8624A;
+    --shadow: 0 30px 60px -20px rgba(58,52,42,0.35);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{
+    margin:0; min-height:100vh;
+    background: var(--paper-deep);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Noto Sans TC', sans-serif; color:var(--ink);
+    overflow-y:auto; overflow-x:hidden; padding:24px 0;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+  }
+  .stage{ width:100%; max-width:400px; height:clamp(600px, 88vh, 720px); display:flex; flex-direction:column; align-items:center; gap:14px; }
+
+  .book{
+    position:relative; width:100%; max-width:380px; flex:1; min-height:0;
+    border-radius:18px 22px 22px 18px;
+    background: var(--paper);
+    box-shadow: var(--shadow);
+    overflow:hidden; isolation:isolate;
+  }
+  .book::before{
+    content:""; position:absolute; inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.29  0 0 0 0 0.26  0 0 0 0 0.13  0 0 0 0.035 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events:none; z-index:5; mix-blend-mode:multiply; opacity:0.5;
+  }
+  .book::after{
+    content:""; position:absolute; left:0; top:0; bottom:0; width:24px;
+    background:linear-gradient(90deg, rgba(58,52,42,0.14), transparent);
+    z-index:6; pointer-events:none;
+  }
+
+  .book-header{
+    position:absolute; top:18px; left:0; right:0;
+    display:flex; align-items:center; justify-content:center;
+    z-index:9; pointer-events:none;
+  }
+  .book-header .brandmark{
+    font-family:'Noto Serif TC', serif; font-weight:700; font-size:12.5px; letter-spacing:0.12em;
+    color:var(--ink-soft); opacity:0.9;
+  }
+
+  /* pages scroll vertically if content is taller than the book — prevents
+     the last question(s) on a crowded page from becoming unreachable */
+  .page{
+    position:absolute; inset:0; border-radius:18px 22px 22px 18px;
+    padding:52px 26px 26px;
+    display:flex; flex-direction:column;
+    opacity:0; transform:translateX(22px) scale(0.99);
+    transition:opacity .5s cubic-bezier(.4,0,.2,1), transform .5s cubic-bezier(.4,0,.2,1);
+    pointer-events:none; overflow-y:auto; overflow-x:hidden;
+    -webkit-overflow-scrolling:touch;
+  }
+  .page.active{ opacity:1; transform:translateX(0) scale(1); pointer-events:auto; z-index:2; }
+
+  .accent-wash{ position:absolute; inset:0; z-index:0; opacity:0.14; pointer-events:none; }
+  .page-content{ position:relative; z-index:2; display:flex; flex-direction:column; flex:1; min-height:0; }
+
+  .folio{
+    position:absolute; bottom:14px; right:20px;
+    font-family:'Lora', serif; font-style:italic; font-size:10.5px; color:var(--ink-faint); z-index:3;
+    pointer-events:none;
+  }
+
+  .corner-figure{ position:absolute; z-index:1; pointer-events:none; }
+  .corner-figure img{ display:block; width:100%; height:auto; filter: drop-shadow(0 8px 12px rgba(58,52,42,0.16)); }
+
+  h1,h2,h3,p{ margin:0; }
+  .serif{ font-family:'Noto Serif TC', serif; }
+  .en-italic{ font-family:'Lora', serif; font-style:italic; }
+
+  /* ---------- Cover ---------- */
+  .page.cover{ align-items:center; justify-content:center; text-align:center; background:var(--paper); padding:56px 24px 24px; overflow:hidden; }
+  .cover-figures{ position:absolute; inset:0; z-index:1; overflow:hidden; }
+  .cover-figures img{ position:absolute; filter: drop-shadow(0 12px 18px rgba(58,52,42,0.16)); opacity:0.95; }
+  .cf-1{ width:190px; top:-10%; left:-22%; transform:rotate(-12deg); }
+  .cf-2{ width:170px; top:-8%; right:-18%; transform:rotate(10deg); }
+  .cf-3{ width:190px; bottom:-10%; left:-20%; transform:rotate(8deg); }
+  .cf-4{ width:180px; bottom:-8%; right:-16%; transform:rotate(-9deg); }
+  .cover-inner{ position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; width:100%; }
+  .cover-title{ font-family:'Noto Serif TC',serif; font-weight:700; font-size:22px; line-height:1.55; color:var(--ink); }
+  .cover-sub{ margin-top:16px; color:var(--ink-soft); font-size:13.5px; line-height:2.1; }
+  .cover-time{ font-size:11.5px; color:var(--ink-faint); margin:22px 0 14px; }
+  .cover-btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    background: var(--coral); color:#fff; font-weight:700; font-size:15px;
+    font-family:'Noto Sans TC',sans-serif; border:none; border-radius:999px;
+    padding:14px 30px; cursor:pointer; box-shadow:0 10px 20px -10px rgba(58,52,42,0.5);
+  }
+  .cover-btn:active{ transform:translateY(1px); }
+
+  /* ---------- generic content pages ---------- */
+  .p-title{ font-family:'Noto Serif TC',serif; font-weight:700; font-size:21px; line-height:1.5; margin-bottom:16px; }
+  .p-body{ font-size:14px; line-height:2; color:var(--ink); text-align:left; }
+  .p-body + .p-body{ margin-top:16px; }
+
+  .scale-preview{ display:flex; align-items:center; justify-content:center; gap:9px; flex-wrap:nowrap; }
+  .sp-circle{
+    width:28px;height:28px;border-radius:50%; flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    font-size:11.5px; font-weight:600; color:#fff;
+    font-family:'Noto Serif TC',serif;
+  }
+
+  /* ---------- question pages ---------- */
+  .q-block{ margin-bottom:16px; padding-bottom:14px; border-bottom:1px dashed rgba(58,52,42,0.16); }
+  .q-block:last-child{ border-bottom:none; margin-bottom:0; padding-bottom:0; }
+  .q-num{ font-family:'Noto Serif TC',serif; font-weight:700; font-size:12.5px; color:var(--slate-deep); margin-bottom:6px; }
+  .q-zh{ font-size:14px; line-height:1.65; margin-bottom:12px; }
+  .scale{ display:flex; justify-content:center; align-items:center; gap:16px; }
+  .bubble-btn{
+    width:28px; height:28px; border-radius:50%;
+    border:1.5px solid rgba(58,52,42,0.22);
+    display:flex; align-items:center; justify-content:center;
+    font-size:11.5px; color:var(--ink-soft); background:#fff;
+    font-family:'Noto Sans TC',sans-serif;
+    transition: all .15s ease; cursor:pointer; padding:0;
+    -webkit-appearance:none; appearance:none; flex-shrink:0;
+  }
+  .bubble-btn.selected{ background:var(--slate-deep); border-color:var(--slate-deep); color:#fff; }
+  .scale-caption{ display:flex; justify-content:space-between; font-size:10px; color:var(--ink-faint); margin-top:10px; }
+  .qwrap{ display:flex; flex-direction:column; justify-content:center; gap:2px; flex:1; }
+
+  /* ---------- result ---------- */
+  .result-wrap{ align-items:center; text-align:center; justify-content:center; }
+  .result-lead{ font-size:13.5px; color:var(--ink-soft); margin-bottom:8px; }
+  .result-figure-stage{ position:relative; width:100%; height:210px; margin-bottom:6px; flex-shrink:0; }
+  .result-figure-stage img{ position:absolute; filter: drop-shadow(0 10px 16px rgba(58,52,42,0.18)); }
+  .result-name{ font-family:'Noto Serif TC',serif; font-weight:700; font-size:20px; margin-bottom:6px; }
+  .result-story{ font-size:13px; color:var(--ink-soft); line-height:1.8; margin-bottom:10px; }
+  .result-combo{ font-size:13px; color:var(--ink); line-height:1.8; }
+  .result-combo strong{ color:var(--slate-deep); }
+
+  .gc-block{ margin-bottom:16px; padding-bottom:16px; border-bottom:1px dashed rgba(58,52,42,0.16); text-align:center; }
+  .gc-block:last-child{ border-bottom:none; }
+  .gc-label{ font-family:'Noto Serif TC',serif; font-size:12px; font-weight:700; color:var(--slate-deep); margin-bottom:6px; }
+
+  .dim-row{ margin-bottom:16px; text-align:left; }
+  .dim-label{ font-size:12.5px; margin-bottom:5px; display:flex; justify-content:space-between; }
+  .dim-label span:last-child{ color:var(--ink-faint); font-size:11.5px; }
+  .dim-track{ background:rgba(58,52,42,0.08); border-radius:999px; height:7px; overflow:hidden; }
+  .dim-fill{ height:100%; border-radius:999px; background:linear-gradient(90deg, var(--slate), var(--mauve)); transition:width 1s ease; }
+
+  .reflect-shape{ position:absolute; border-radius:50%; z-index:0; pointer-events:none; }
+
+  .refs{ font-size:11.5px; color:var(--ink-soft); line-height:1.8; text-align:left; }
+  .disclaimer{ font-size:11.5px; color:var(--ink-soft); background:var(--paper-deep); border-radius:12px; padding:14px 16px; line-height:1.75; text-align:left; }
+  a{ color:var(--slate-deep); }
+
+  .email-input{
+    width:100%; padding:13px 15px; border-radius:12px; border:1.5px solid rgba(58,52,42,0.2);
+    font-size:14.5px; font-family:'Noto Sans TC',sans-serif; margin-bottom:10px; background:#fff;
+  }
+  .action-btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    background:var(--slate-deep); color:#fff; border:none; border-radius:999px;
+    padding:12px 22px; font-family:'Noto Sans TC',sans-serif; font-size:14px; font-weight:600;
+    cursor:pointer; width:100%; margin-top:10px;
+  }
+  .action-btn.ghost{ background:transparent; color:var(--ink-soft); text-decoration:underline; text-underline-offset:3px; font-weight:500; }
+  .action-btn:disabled{ opacity:.35; }
+
+  /* ---------- nav controls ---------- */
+  .controls{ display:flex; align-items:center; justify-content:center; gap:16px; }
+  .nav-btn{
+    width:40px; height:40px; border-radius:50%; border:1px solid rgba(58,52,42,0.18);
+    background:var(--paper); color:var(--ink); font-size:18px; display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+  }
+  .nav-btn:disabled{ opacity:.3; cursor:not-allowed; }
+  .dots{ display:flex; gap:4px; align-items:center; flex-wrap:wrap; justify-content:center; max-width:180px; }
+  .dots span{ width:5px; height:5px; border-radius:50%; background:rgba(58,52,42,0.18); transition:background .2s; }
+  .dots span.on{ background:var(--slate-deep); }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="book" id="book">
+    <div class="book-header"><span class="brandmark">HUMAN SPACE</span></div>
+
+    <!-- Cover -->
+    <section class="page cover active" data-page="cover">
+      <div class="cover-figures">
+        <img class="cf-1" src="anxious.png" alt="" onerror="this.style.display='none'">
+        <img class="cf-2" src="secure.png" alt="" onerror="this.style.display='none'">
+        <img class="cf-3" src="fearful.png" alt="" onerror="this.style.display='none'">
+        <img class="cf-4" src="avoidant.png" alt="" onerror="this.style.display='none'">
+      </div>
+      <div class="cover-inner">
+        <div class="cover-title">你是怎麼靠近一個人的？</div>
+        <div class="cover-sub">有時候，我們想靠近一個人，<br>有時候卻又想退一步。<br><br>這份小測驗，從「依附焦慮」與「依附逃避」兩個方向，<br>陪你看看自己在親密關係裡，習慣怎麼靠近。</div>
+        <div class="cover-time">16 題，大約 3–5 分鐘</div>
+        <button class="cover-btn" onclick="go(1)">開始探索</button>
+      </div>
+    </section>
+
+    <!-- Concept -->
+    <section class="page" data-page="concept">
+      <div class="accent-wash" style="background:var(--mauve);"></div>
+      <div class="corner-figure" style="width:110px; right:-14px; bottom:6px; opacity:0.92;"><img src="fearful.png" alt="" onerror="this.parentElement.style.display='none'"></div>
+      <div class="page-content" style="justify-content:center;">
+        <div class="p-title">親密，沒有『對』的樣子。</div>
+        <div class="p-body">有些人靠近時，很自然地感到放心；<br>有些人靠近時，卻忍不住想確認，或想退開一下。</div>
+        <div class="p-body">這不是為了替你貼上一個標籤，<br>而是一張小小的地圖，<br>陪你多認識一點自己現在習慣怎麼靠近一個人。</div>
+      </div>
+      <div class="folio">2</div>
+    </section>
+
+    <!-- Before you begin -->
+    <section class="page" data-page="before">
+      <div class="accent-wash" style="background:var(--mustard);"></div>
+      <div class="corner-figure" style="width:130px; right:-26px; top:-8px; opacity:0.85; transform:rotate(9deg);"><img src="anxious.png" alt="" onerror="this.parentElement.style.display='none'"></div>
+      <div class="corner-figure" style="width:100px; left:-20px; bottom:70px; opacity:0.8; transform:rotate(-8deg);"><img src="avoidant.png" alt="" onerror="this.parentElement.style.display='none'"></div>
+      <div class="page-content" style="align-items:center; text-align:center; justify-content:center; padding-bottom:14px;">
+        <div class="p-title" style="font-size:18px; text-align:center;">16 個簡短的敘述<br>請依照你現在的感覺作答</div>
+        <div class="scale-preview" style="margin-top:22px;">
+          <span style="font-size:12px; color:var(--ink-soft); margin-right:6px;">完全不像我</span>
+          <div class="sp-circle" style="background:#D9CDBA;">1</div>
+          <div class="sp-circle" style="background:#B79F7C;">2</div>
+          <div class="sp-circle" style="background:#8A7A5C;">3</div>
+          <div class="sp-circle" style="background:var(--slate-deep);">4</div>
+          <span style="font-size:12px; color:var(--ink-soft); margin-left:6px;">非常像我</span>
+        </div>
+        <div class="p-body" style="color:var(--ink-soft); font-size:13px; text-align:center; margin-top:18px;">本測驗共 16 題，約 3–5 分鐘</div>
+      </div>
+      <div class="folio">3</div>
+    </section>
+
+    <!-- Q1-5 (3 questions each, last page has 4) -->
+    <section class="page" data-page="q1"><div class="accent-wash" style="background:var(--slate);"></div><div class="page-content"><div class="qwrap" id="qpage-1"></div></div><div class="folio">4</div></section>
+    <section class="page" data-page="q2"><div class="accent-wash" style="background:var(--slate);"></div><div class="page-content"><div class="qwrap" id="qpage-2"></div></div><div class="folio">5</div></section>
+    <section class="page" data-page="q3"><div class="accent-wash" style="background:var(--slate);"></div><div class="page-content"><div class="qwrap" id="qpage-3"></div></div><div class="folio">6</div></section>
+    <section class="page" data-page="q4"><div class="accent-wash" style="background:var(--slate);"></div><div class="page-content"><div class="qwrap" id="qpage-4"></div></div><div class="folio">7</div></section>
+    <section class="page" data-page="q5"><div class="accent-wash" style="background:var(--slate);"></div><div class="page-content"><div class="qwrap" id="qpage-5"></div></div><div class="folio">8</div></section>
+
+    <!-- Result -->
+    <section class="page result-wrap" data-page="result">
+      <div class="page-content" style="align-items:center; justify-content:center;">
+        <div class="result-lead">你的親密模式比較接近</div>
+        <div class="result-figure-stage" id="resultFigureStage"></div>
+        <div class="result-name" id="resultName"></div>
+        <div class="result-story" id="resultStory"></div>
+        <div class="result-combo" id="resultLead"></div>
+      </div>
+      <div class="folio">9</div>
+    </section>
+
+    <!-- Qualities (strength / difficulty / try) -->
+    <section class="page" data-page="qualities">
+      <div class="accent-wash" style="background:var(--mauve);"></div>
+      <div class="page-content" id="qualitiesCard" style="justify-content:center;"></div>
+      <div class="folio">10</div>
+    </section>
+
+    <!-- Map -->
+    <section class="page" data-page="map">
+      <div class="page-content">
+        <div class="p-title" style="font-size:19px;">你的親密地圖</div>
+        <p style="font-size:13px; color:var(--ink-soft); line-height:1.8; margin-bottom:18px;">這不是一個「你有多依附」的總分，只是這兩個維度，在你今天的回答裡呈現出來的樣子。</p>
+        <div id="mapBars"></div>
+      </div>
+      <div class="folio">11</div>
+    </section>
+
+    <!-- Reflect / closing + disclaimer -->
+    <section class="page" data-page="reflect">
+      <div class="reflect-shape" style="width:120px; height:120px; background:var(--mustard); opacity:0.35; top:-30px; left:-30px;"></div>
+      <div class="reflect-shape" style="width:80px; height:80px; background:var(--mauve); opacity:0.4; bottom:40px; right:-20px;"></div>
+      <div class="reflect-shape" style="width:50px; height:50px; background:var(--coral); opacity:0.35; bottom:100px; left:10px;"></div>
+      <div class="reflect-shape" style="width:34px; height:34px; background:var(--slate); opacity:0.4; top:60px; right:20px;"></div>
+      <div class="page-content" style="align-items:center; justify-content:center; text-align:center;">
+        <div class="p-title serif" style="font-size:17px; line-height:1.85; margin-bottom:20px;" id="reflectClose"></div>
+        <div class="disclaimer" style="text-align:center;">這是你現在比較熟悉的靠近方式，不是你永遠的樣子。<br><br>依附模式可以隨著關係、經驗與生命事件改變。<br><br>本測驗參考成人依附研究與 ECR 的「依附焦慮 × 依附逃避」雙軸架構設計，僅供自我探索，不是正式心理量表或臨床診斷。</div>
+      </div>
+      <div class="folio">12</div>
+    </section>
+
+    <!-- Scientific basis -->
+    <section class="page" data-page="science">
+      <div class="page-content">
+        <div class="p-title" style="font-size:16px;">科學基礎</div>
+        <p class="refs">本測驗的概念，受到成人依附研究的啟發，包含 John Bowlby 的依附理論、Mary Ainsworth 的早期依附研究、Cindy Hazan 與 Phillip Shaver 將依附理論延伸至成人親密關係的研究、Kim Bartholomew 與 Leonard Horowitz 的四類依附模型，以及 Brennan、Clark 與 Shaver 發展的 ECR／ECR-R「依附焦慮 × 依附逃避」雙軸架構。<br><br>本測驗並非官方 ECR 量表，僅概念性參考上述研究，未經臨床或心理計量驗證。</p>
+      </div>
+      <div class="folio">13</div>
+    </section>
+
+    <!-- Email -->
+    <section class="page" data-page="email">
+      <div class="page-content">
+        <div class="p-title" style="font-size:19px;">繼續探索自己。</div>
+        <p style="font-size:13.5px; color:var(--ink-soft); line-height:1.8; margin-bottom:14px;">喜歡我們的小測驗嗎？歡迎留下你的 email，成為首批會員，未來將優先獲得我們的新內容與服務！</p>
+
+        <!-- ConvertKit (Kit) official embed — form id 9779228 -->
+        <script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
+        <form action="https://app.kit.com/forms/9779228/subscriptions" class="seva-form formkit-form" method="post" data-sv-form="9779228" data-uid="9809e05442zh2" data-format="inline" data-version="5">
+          <div data-style="clean">
+            <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul>
+            <div data-element="fields" data-stacked="false" class="seva-fields formkit-fields">
+              <div class="formkit-field"><input class="formkit-input email-input" name="email_address" style="color:#2B2A33;border-color:#E4DBC8;border-radius:14px;font-weight:400;font-family:'Noto Sans TC',sans-serif;" aria-label="Email Address" placeholder="you@example.com" required type="email"></div>
+              <button data-element="submit" class="formkit-submit formkit-submit action-btn" style="color:#ffffff;background-color:#3F5C79;border-radius:999px;font-weight:600;font-family:'Noto Sans TC',sans-serif;box-shadow:none;margin-top:4px;">
+                <span>加入 Human Space Club →</span>
+              </button>
+            </div>
+          </div>
+        </form>
+        <!-- end ConvertKit embed -->
+
+        <button class="action-btn ghost" onclick="go(1)">暫時不用，稍後再說</button>
+      </div>
+      <div class="folio">14</div>
+    </section>
+
+    <!-- Disclaimer / restart -->
+    <section class="page" data-page="disclaimer">
+      <div class="page-content" style="justify-content:center;">
+        <div class="p-title" style="font-size:16px; text-align:center;">免責聲明</div>
+        <div class="disclaimer" style="text-align:center;">本測驗提供自我探索娛樂使用，靈感來自成人依附研究與 ECR 的「依附焦慮 × 依附逃避」雙軸架構，但並非官方心理量表，也未經臨床或心理計量驗證。本體驗不能用於診斷或排除任何心理或身體健康狀況。</div>
+        <button class="action-btn ghost" style="margin-top:20px;" onclick="restartQuiz()">重新測驗</button>
+      </div>
+      <div class="folio">15</div>
+    </section>
+
+  </div>
+
+  <div class="controls">
+    <button class="nav-btn" id="prevBtn" aria-label="上一頁">‹</button>
+    <div class="dots" id="dots"></div>
+    <button class="nav-btn" id="nextBtn" aria-label="下一頁">›</button>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   QUESTIONS — 8 anxiety + 8 avoidance
+   ========================================================= */
+const QUESTIONS = [
+  {id:1, dim:'anxiety', zh:"當對方突然沒有回訊息，我會開始猜想是不是自己做錯了什麼。"},
+  {id:2, dim:'anxiety', zh:"當對方最近比較少主動聯絡我，我會忍不住想，他是不是沒有以前那麼在乎我了。"},
+  {id:3, dim:'anxiety', zh:"我很在意自己對伴侶來說，是不是一個重要的人。"},
+  {id:4, dim:'anxiety', zh:"發生爭執後，我很難先放著不管，會很想知道我們現在是不是還好。"},
+  {id:5, dim:'anxiety', zh:"看到伴侶和別人很親近時，我有時會擔心自己是不是正在被取代。"},
+  {id:6, dim:'anxiety', zh:"有時候，我會從對方的語氣、表情或小動作裡，尋找他是不是還在乎我的線索。"},
+  {id:7, dim:'anxiety', zh:"當我感覺對方正在慢慢變遠時，我會很想做些什麼，把我們拉回原來的距離。"},
+  {id:8, dim:'anxiety', zh:"即使現在的關係沒有發生什麼事，我偶爾還是會想到：如果有一天他不再愛我了呢？"},
+  {id:9, dim:'avoidance', zh:"當一個人越來越靠近我時，我有時反而會想保留一點距離。"},
+  {id:10, dim:'avoidance', zh:"我不太習慣把自己的脆弱或不安告訴伴侶。"},
+  {id:11, dim:'avoidance', zh:"遇到感情上的問題時，我通常比較想自己消化，而不是馬上找對方談。"},
+  {id:12, dim:'avoidance', zh:"當伴侶很需要我的陪伴或情緒支持時，我有時會覺得有點喘不過氣。"},
+  {id:13, dim:'avoidance', zh:"即使我很喜歡一個人，我也會很在意自己能不能保有自己的生活。"},
+  {id:14, dim:'avoidance', zh:"當關係變得非常親密時，我偶爾會突然很想一個人待著。"},
+  {id:15, dim:'avoidance', zh:"即使我很信任一個人，我也不太喜歡讓自己太依賴他。"},
+  {id:16, dim:'avoidance', zh:"發生衝突時，我通常會先退開，不太想在當下繼續談。"}
+];
+
+/* =========================================================
+   ARCHETYPES — four quadrants
+   ========================================================= */
+const ARCHETYPES = {
+  secure:{
+    img:"secure.png",
+    title:"安全型｜安心靠近",
+    approach:"你通常能享受親密，也能保有自己的生活。關係出現變化時，你比較能相信彼此可以一起面對。",
+    strength:"你能表達需要，也能尊重彼此的界線。親密對你而言，可以是依靠，也可以是自由。",
+    difficulty:"安全感也會受到傷害。當關係真的遇到變化，你仍可能焦慮、失望或想退開。",
+    try:"不要只在出問題時溝通。主動分享感受與需要，也是在持續建立關係的安全感。",
+    humanspace:"安心靠近，不代表沒有害怕，而是害怕的時候，你知道自己可以留下來。",
+    formula:(a,v)=>((100-a)+(100-v))/2
+  },
+  anxious:{
+    img:"anxious.png",
+    title:"焦慮型｜渴望靠近",
+    approach:"你很重視連結，也容易察覺關係裡細微的變化。當對方變得安靜，你可能很快開始尋找原因。",
+    strength:"你通常很敏銳，也願意投入關係。你能感受到許多細節，也很在意對方的感受。",
+    difficulty:"不確定感可能讓你不斷尋找答案。有時候，尋找答案反而讓焦慮更大。",
+    try:"把「我感覺」和「我知道」分開。確認事實以前，先給自己的情緒一點空間。",
+    humanspace:"你不需要停止渴望愛，只需要慢慢學會，在沒有答案時，也陪自己待一會兒。",
+    formula:(a,v)=>(a+(100-v))/2
+  },
+  avoidant:{
+    img:"avoidant.png",
+    title:"逃避型｜保持距離",
+    approach:"你可能很重視自主與自己的空間。當關係變得太靠近，或情緒變得太多，你容易先退一步。",
+    strength:"你知道如何保有自己的生活，也可能很尊重對方的界線。",
+    difficulty:"「我自己可以」有時會慢慢變成「我不需要任何人」，讓真正的需求很難被看見。",
+    try:"不用一次把自己完全打開。從一句「我現在還不知道怎麼說」開始，也是一種靠近。",
+    humanspace:"保持距離可以保護你，也可以讓值得信任的人知道，為什麼你站在這裡。",
+    formula:(a,v)=>((100-a)+v)/2
+  },
+  fearful:{
+    img:"fearful.png",
+    title:"恐懼型｜靠近又退開",
+    approach:"你可能同時渴望親密，也害怕受傷。關係太遠時不安，太近時又可能想退開。",
+    strength:"你對親密有很深的感受力，也很渴望真正的連結。你的防備，有時也是保護自己的方式。",
+    difficulty:"你可能很難分辨：「我不想要這段關係」，還是「我害怕這段關係會讓我受傷」。",
+    try:"當你突然想抽離時，不必立刻做決定。先問自己：我想離開的是這個人，還是此刻的不安全感？",
+    humanspace:"你可以一邊害怕，一邊慢慢學習靠近。不需要一次就知道答案。",
+    formula:(a,v)=>(a+v)/2
+  }
+};
+
+/* Double-result copy, keyed by sorted "key1+key2" */
+const DOUBLE_COPY = {
+  "anxious+secure":{
+    lead:"你可能一方面相信關係，也能自在靠近；另一方面，在重要的人變得不確定時，又容易需要更多確認。",
+    practice:"保留你對親密的信任，也允許自己在不安時說出需要，而不是獨自猜測答案。"
+  },
+  "avoidant+secure":{
+    lead:"你可能享受親密，也很重視自主。有時候，你知道如何靠近，也知道什麼時候需要退回自己的空間。",
+    practice:"確認「我需要空間」和「我正在逃離親密」之間的差別。"
+  },
+  "fearful+secure":{
+    lead:"你可能大多時候能自在建立連結，但遇到特定情境時，也會突然變得防備或想退開。",
+    practice:"注意那些讓你突然失去安全感的時刻，理解自己的防衛從哪裡開始。"
+  },
+  "anxious+avoidant":{
+    lead:"你可能一方面很想確認關係，一方面又不習慣真正依賴別人。靠近與退開，可能在你身上同時發生。",
+    practice:"當你想確認或抽離時，先辨認自己真正需要的是連結、空間，還是安全感。"
+  },
+  "anxious+fearful":{
+    lead:"你可能很渴望對方靠近，但當關係變得更深，也容易出現擔心與防備。",
+    practice:"先不要急著判斷這段關係好不好，試著觀察什麼時候你開始感到不安全。"
+  },
+  "avoidant+fearful":{
+    lead:"你可能很需要自己的空間，同時又渴望有人真正理解你。親密有時讓你期待，也讓你想保護自己。",
+    practice:"不用一次交出全部的自己。可以從一點點信任、一點點靠近開始。"
+  }
+};
+
+const PAGES = ['cover','concept','before','q1','q2','q3','q4','q5','result','qualities','map','reflect','science','email','disclaimer'];
+const QPAGE_INDEX = { q1:0, q2:1, q3:2, q4:3, q5:4 };
+const SPLIT_SIZES = [3,3,3,3,4]; // 16 questions across 5 pages
+
+let order = [];       // shuffled question order for this session
+let answers = {};
+let currentResult = null;
+let idx = 0;
+
+/* ---------- session bootstrap ---------- */
+function shuffledOrder(){
+  const arr = QUESTIONS.map(q=>q.id);
+  for(let i=arr.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+function splitIntoPages(list, sizes){
+  const pages = []; let cursor = 0;
+  sizes.forEach(size=>{ pages.push(list.slice(cursor, cursor+size)); cursor += size; });
+  return pages;
+}
+try{
+  const savedOrder = JSON.parse(sessionStorage.getItem('attach_order_zh_v3') || 'null');
+  order = Array.isArray(savedOrder) && savedOrder.length===16 ? savedOrder : shuffledOrder();
+  sessionStorage.setItem('attach_order_zh_v3', JSON.stringify(order));
+  answers = JSON.parse(sessionStorage.getItem('attach_answers_zh_v3') || '{}');
+}catch(e){ order = shuffledOrder(); answers = {}; }
+
+let orderedQuestions = order.map(id => QUESTIONS.find(q=>q.id===id));
+let QUESTION_PAGES = splitIntoPages(orderedQuestions, SPLIT_SIZES);
+
+/* =========================================================
+   Navigation
+   ========================================================= */
+const pageEls = PAGES.map(id => document.querySelector(`[data-page="${id}"]`));
+const dotsWrap = document.getElementById('dots');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+PAGES.forEach(()=> dotsWrap.appendChild(document.createElement('span')));
+const dotEls = Array.from(dotsWrap.children);
+
+function isQuestionPage(pageId){ return pageId in QPAGE_INDEX; }
+function questionPageComplete(pageId){
+  const qs = QUESTION_PAGES[QPAGE_INDEX[pageId]];
+  return qs.every(q => answers[q.id] !== undefined);
+}
+
+function render(){
+  const pageId = PAGES[idx];
+  pageEls.forEach((el,i)=> el.classList.toggle('active', i===idx));
+  dotEls.forEach((d,i)=> d.classList.toggle('on', i<=idx));
+  prevBtn.disabled = idx===0;
+  const canNext = isQuestionPage(pageId) ? questionPageComplete(pageId) : true;
+  nextBtn.disabled = (idx===PAGES.length-1) || (isQuestionPage(pageId) && !canNext);
+  pageEls[idx].scrollTop = 0;
+}
+
+function go(delta){
+  const next = idx + delta;
+  if(next<0 || next>=PAGES.length) return;
+  const leavingId = PAGES[idx];
+  if(delta>0 && isQuestionPage(leavingId) && !questionPageComplete(leavingId)) return;
+  idx = next;
+  if(PAGES[idx] === 'result'){ computeResult(); }
+  render();
+}
+
+prevBtn.addEventListener('click', ()=>go(-1));
+nextBtn.addEventListener('click', ()=>go(1));
+document.getElementById('book').addEventListener('click', (e)=>{
+  if(e.target.closest('button, a, input, label, form')) return;
+  const rect = e.currentTarget.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  if(x < rect.width*0.15) go(-1);
+  else if(x > rect.width*0.85) go(1);
+});
+let touchStartX = null, touchStartY = null;
+const bookEl = document.getElementById('book');
+bookEl.addEventListener('touchstart', (e)=>{ touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY; }, {passive:true});
+bookEl.addEventListener('touchend', (e)=>{
+  if(touchStartX===null) return;
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if(Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)*1.5){ dx > 0 ? go(-1) : go(1); }
+  touchStartX = null; touchStartY = null;
+}, {passive:true});
+window.addEventListener('keydown', (e)=>{
+  if(e.key==='ArrowRight') go(1);
+  if(e.key==='ArrowLeft') go(-1);
+});
+
+/* =========================================================
+   Question rendering
+   ========================================================= */
+function renderQuestionPage(pageIndex){
+  const questions = QUESTION_PAGES[pageIndex];
+  const container = document.getElementById(`qpage-${pageIndex+1}`);
+  container.innerHTML = questions.map(q => `
+    <div class="q-block">
+      <div class="q-num">${String(q.id).padStart(2,'0')}</div>
+      <div class="q-zh">${q.zh}</div>
+      <div class="scale" data-qid="${q.id}" role="radiogroup" aria-label="${q.zh}">
+        ${[1,2,3,4].map(v => `
+          <button type="button" class="bubble-btn ${answers[q.id]==v?'selected':''}" data-val="${v}" role="radio" aria-checked="${answers[q.id]==v}" onclick="setAnswer(${q.id}, ${v})">${v}</button>
+        `).join('')}
+      </div>
+    </div>
+  `).join('') + `<div class="scale-caption"><span>完全不像我</span><span>非常像我</span></div>`;
+}
+function setAnswer(qid, val){
+  answers[qid] = val;
+  try{ sessionStorage.setItem('attach_answers_zh_v3', JSON.stringify(answers)); }catch(e){}
+  const scaleEl = document.querySelector(`.scale[data-qid="${qid}"]`);
+  if(scaleEl){
+    scaleEl.querySelectorAll('.bubble-btn').forEach(btn=>{
+      const on = Number(btn.dataset.val) === val;
+      btn.classList.toggle('selected', on);
+      btn.setAttribute('aria-checked', on);
+    });
+  }
+  render();
+}
+[0,1,2,3,4].forEach(renderQuestionPage);
+
+/* =========================================================
+   Scoring
+   ========================================================= */
+function sumDim(dim){
+  return QUESTIONS.filter(q=>q.dim===dim).reduce((sum,q)=> sum + (answers[q.id]||1), 0);
+}
+function normalize(raw){ return ((raw - 8) / (32 - 8)) * 100; }
+
+function computeResult(){
+  const rawAnxiety = sumDim('anxiety');
+  const rawAvoidance = sumDim('avoidance');
+  const normAnxiety = Math.max(0, Math.min(100, normalize(rawAnxiety)));
+  const normAvoidance = Math.max(0, Math.min(100, normalize(rawAvoidance)));
+
+  const scored = Object.entries(ARCHETYPES).map(([key, arche]) => ({
+    key, arche, score: arche.formula(normAnxiety, normAvoidance)
+  })).sort((a,b)=>b.score - a.score);
+
+  const primary = scored[0], secondary = scored[1];
+  const gap = primary.score - secondary.score;
+  currentResult = { primary, secondary, gap, norm:{ anxiety:normAnxiety, avoidance:normAvoidance } };
+  renderResult(); renderQualities(); renderMap(currentResult.norm);
+  document.getElementById('reflectClose').textContent = currentResult.primary.arche.humanspace;
+}
+
+function pairKey(k1,k2){ return [k1,k2].sort().join('+'); }
+
+function getResultPresentation(){
+  const { primary, secondary, gap } = currentResult;
+  const p = primary.arche, s = secondary.arche;
+
+  if(gap < 8){
+    const dc = DOUBLE_COPY[pairKey(primary.key, secondary.key)];
+    return {
+      mode:'dual',
+      title: `${p.title} × ${s.title}`,
+      leadHTML: `<p style="margin-bottom:8px;">你的親密模式，可能同時靠近兩個方向。</p><p>${dc ? dc.lead : ''}</p>`,
+      figureHTML: `
+        <img src="${p.img}" style="width:170px; left:8%; top:0; transform:rotate(-6deg); z-index:2;" onerror="this.style.display='none'">
+        <img src="${s.img}" style="width:150px; right:2%; top:30px; transform:rotate(7deg); z-index:1;" onerror="this.style.display='none'">`,
+      storyHTML: '',
+      qualitiesHTML: `
+        <div class="gc-block"><div class="gc-label">你的優勢 · ${p.title}</div><p class="p-body" style="text-align:center;">${p.strength}</p></div>
+        <div class="gc-block"><div class="gc-label">容易卡住的地方 · ${s.title}</div><p class="p-body" style="text-align:center;">${s.difficulty}</p></div>
+        <div class="gc-block"><div class="gc-label">可以試著練習</div><p class="p-body" style="text-align:center;">${dc ? dc.practice : ''}</p></div>`
+    };
+  } else if(gap <= 25){
+    return {
+      mode:'primary-secondary',
+      title: `${p.title} × ${s.title}`,
+      leadHTML: `你的親密模式較接近 <strong>${p.title}</strong>，同時你身上也帶著一些 <strong>${s.title}</strong> 的傾向。`,
+      figureHTML: `
+        <img src="${p.img}" style="width:190px; left:50%; top:0; transform:translateX(-50%) rotate(-3deg); z-index:2;" onerror="this.style.display='none'">
+        <img src="${s.img}" style="width:120px; right:0%; bottom:0; transform:rotate(8deg); z-index:1; opacity:0.9;" onerror="this.style.display='none'">`,
+      storyHTML: p.approach,
+      qualitiesHTML: `
+        <div class="gc-block"><div class="gc-label">你的關係優勢</div><p class="p-body" style="text-align:center;">${p.strength}</p></div>
+        <div class="gc-block"><div class="gc-label">容易卡住的地方</div><p class="p-body" style="text-align:center;">${p.difficulty}</p></div>
+        <div class="gc-block"><div class="gc-label">可以試著練習</div><p class="p-body" style="text-align:center;">${p.try}</p></div>`
+    };
+  } else {
+    return {
+      mode:'primary',
+      title: p.title,
+      leadHTML: `<span style="color:var(--ink-faint); font-size:12.5px;"><strong>${s.title}</strong> 的痕跡也悄悄出現在你的回答裡。</span>`,
+      figureHTML: `<img src="${p.img}" style="width:210px; left:50%; top:0; transform:translateX(-50%);" onerror="this.style.display='none'">`,
+      storyHTML: p.approach,
+      qualitiesHTML: `
+        <div class="gc-block"><div class="gc-label">你的關係優勢</div><p class="p-body" style="text-align:center;">${p.strength}</p></div>
+        <div class="gc-block"><div class="gc-label">容易卡住的地方</div><p class="p-body" style="text-align:center;">${p.difficulty}</p></div>
+        <div class="gc-block"><div class="gc-label">可以試著練習</div><p class="p-body" style="text-align:center;">${p.try}</p></div>`
+    };
+  }
+}
+
+function renderResult(){
+  const pres = getResultPresentation();
+  document.getElementById('resultFigureStage').innerHTML = pres.figureHTML;
+  document.getElementById('resultName').textContent = pres.title;
+  document.getElementById('resultStory').textContent = pres.storyHTML;
+  document.getElementById('resultLead').innerHTML = pres.leadHTML;
+}
+function renderQualities(){
+  const pres = getResultPresentation();
+  document.getElementById('qualitiesCard').innerHTML = `
+    <div class="p-title" style="font-size:17px; text-align:center;">${pres.title}</div>
+    ${pres.qualitiesHTML}`;
+}
+function renderMap(norm){
+  document.getElementById('mapBars').innerHTML = `
+    <div class="dim-row">
+      <div class="dim-label"><span>依附焦慮</span><span>${Math.round(norm.anxiety)} / 100</span></div>
+      <div class="dim-track"><div class="dim-fill" style="width:${norm.anxiety}%"></div></div>
+    </div>
+    <div class="dim-row">
+      <div class="dim-label"><span>依附逃避</span><span>${Math.round(norm.avoidance)} / 100</span></div>
+      <div class="dim-track"><div class="dim-fill" style="width:${norm.avoidance}%"></div></div>
+    </div>`;
+}
+
+function restartQuiz(){
+  answers = {};
+  try{
+    sessionStorage.removeItem('attach_answers_zh_v3');
+    sessionStorage.removeItem('attach_order_zh_v3');
+  }catch(e){}
+  order = shuffledOrder();
+  try{ sessionStorage.setItem('attach_order_zh_v3', JSON.stringify(order)); }catch(e){}
+  orderedQuestions = order.map(id => QUESTIONS.find(q=>q.id===id));
+  QUESTION_PAGES = splitIntoPages(orderedQuestions, SPLIT_SIZES);
+  [0,1,2,3,4].forEach(renderQuestionPage);
+  idx = 0; render();
+}
+
+render();
+</script>
+</body>
+</html>
