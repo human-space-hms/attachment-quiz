@@ -68,7 +68,7 @@
      the last question(s) on a crowded page from becoming unreachable */
   .page{
     position:absolute; inset:0; border-radius:18px 22px 22px 18px;
-    padding:56px 26px 26px;
+    padding:52px 26px 26px;
     display:flex; flex-direction:column;
     opacity:0; transform:translateX(22px) scale(0.99);
     transition:opacity .5s cubic-bezier(.4,0,.2,1), transform .5s cubic-bezier(.4,0,.2,1);
@@ -114,9 +114,9 @@
   .cover-btn:active{ transform:translateY(1px); }
 
   /* ---------- generic content pages ---------- */
-  .p-title{ font-family:'Noto Serif TC',serif; font-weight:700; font-size:22px; line-height:1.5; margin-bottom:18px; }
-  .p-body{ font-size:14.5px; line-height:2.05; color:var(--ink); text-align:left; }
-  .p-body + .p-body{ margin-top:18px; }
+  .p-title{ font-family:'Noto Serif TC',serif; font-weight:700; font-size:21px; line-height:1.5; margin-bottom:16px; }
+  .p-body{ font-size:14px; line-height:2; color:var(--ink); text-align:left; }
+  .p-body + .p-body{ margin-top:16px; }
 
   .scale-preview{ display:flex; align-items:center; justify-content:center; gap:9px; flex-wrap:nowrap; }
   .sp-circle{
@@ -127,13 +127,13 @@
   }
 
   /* ---------- question pages ---------- */
-  .q-block{ margin-bottom:14px; padding-bottom:12px; border-bottom:1px dashed rgba(58,52,42,0.16); }
+  .q-block{ margin-bottom:16px; padding-bottom:14px; border-bottom:1px dashed rgba(58,52,42,0.16); }
   .q-block:last-child{ border-bottom:none; margin-bottom:0; padding-bottom:0; }
-  .q-num{ font-family:'Noto Serif TC',serif; font-weight:700; font-size:12.5px; color:var(--slate-deep); margin-bottom:5px; }
-  .q-zh{ font-size:13.5px; line-height:1.6; margin-bottom:10px; }
-  .scale{ display:flex; justify-content:center; align-items:center; gap:14px; }
+  .q-num{ font-family:'Noto Serif TC',serif; font-weight:700; font-size:12.5px; color:var(--slate-deep); margin-bottom:6px; }
+  .q-zh{ font-size:14px; line-height:1.65; margin-bottom:12px; }
+  .scale{ display:flex; justify-content:center; align-items:center; gap:16px; }
   .bubble-btn{
-    width:27px; height:27px; border-radius:50%;
+    width:28px; height:28px; border-radius:50%;
     border:1.5px solid rgba(58,52,42,0.22);
     display:flex; align-items:center; justify-content:center;
     font-size:11.5px; color:var(--ink-soft); background:#fff;
@@ -142,8 +142,8 @@
     -webkit-appearance:none; appearance:none; flex-shrink:0;
   }
   .bubble-btn.selected{ background:var(--slate-deep); border-color:var(--slate-deep); color:#fff; }
-  .scale-caption{ display:flex; justify-content:space-between; font-size:10px; color:var(--ink-faint); margin-top:8px; }
-  .qwrap{ display:flex; flex-direction:column; justify-content:center; gap:4px; flex:1; }
+  .scale-caption{ display:flex; justify-content:space-between; font-size:10px; color:var(--ink-faint); margin-top:10px; }
+  .qwrap{ display:flex; flex-direction:column; justify-content:center; gap:2px; flex:1; }
 
   /* ---------- result ---------- */
   .result-wrap{ align-items:center; text-align:center; justify-content:center; }
@@ -205,10 +205,10 @@
     <!-- Cover -->
     <section class="page cover active" data-page="cover">
       <div class="cover-figures">
-        <img class="cf-1" src="../assets/characters/anxious.png" alt="">
-        <img class="cf-2" src="../assets/characters/secure.png" alt="">
-        <img class="cf-3" src="../assets/characters/fearful.png" alt="">
-        <img class="cf-4" src="../assets/characters/avoidant.png" alt="">
+        <img class="cf-1" src="anxious.png" alt="" onerror="this.style.display='none'">
+        <img class="cf-2" src="secure.png" alt="" onerror="this.style.display='none'">
+        <img class="cf-3" src="fearful.png" alt="" onerror="this.style.display='none'">
+        <img class="cf-4" src="avoidant.png" alt="" onerror="this.style.display='none'">
       </div>
       <div class="cover-inner">
         <div class="cover-title">你是怎麼靠近一個人的？</div>
@@ -221,7 +221,7 @@
     <!-- Concept -->
     <section class="page" data-page="concept">
       <div class="accent-wash" style="background:var(--mauve);"></div>
-      <div class="corner-figure" style="width:120px; right:-14px; bottom:6px; opacity:0.92;"><img src="../assets/characters/fearful.png" alt=""></div>
+      <div class="corner-figure" style="width:110px; right:-14px; bottom:6px; opacity:0.92;"><img src="fearful.png" alt="" onerror="this.parentElement.style.display='none'"></div>
       <div class="page-content" style="justify-content:center;">
         <div class="p-title">親密，沒有『對』的樣子。</div>
         <div class="p-body">有些人靠近時，很自然地感到放心；<br>有些人靠近時，卻忍不住想確認，或想退開一下。</div>
@@ -233,11 +233,11 @@
     <!-- Before you begin -->
     <section class="page" data-page="before">
       <div class="accent-wash" style="background:var(--mustard);"></div>
-      <div class="corner-figure" style="width:140px; right:-28px; top:-8px; opacity:0.85; transform:rotate(9deg);"><img src="../assets/characters/anxious.png" alt=""></div>
-      <div class="corner-figure" style="width:110px; left:-22px; bottom:70px; opacity:0.8; transform:rotate(-8deg);"><img src="../assets/characters/avoidant.png" alt=""></div>
+      <div class="corner-figure" style="width:130px; right:-26px; top:-8px; opacity:0.85; transform:rotate(9deg);"><img src="anxious.png" alt="" onerror="this.parentElement.style.display='none'"></div>
+      <div class="corner-figure" style="width:100px; left:-20px; bottom:70px; opacity:0.8; transform:rotate(-8deg);"><img src="avoidant.png" alt="" onerror="this.parentElement.style.display='none'"></div>
       <div class="page-content" style="align-items:center; text-align:center; justify-content:center; padding-bottom:14px;">
-        <div class="p-title" style="font-size:19px; text-align:center;">16 個簡短的敘述<br>請依照你現在的感覺作答</div>
-        <div class="scale-preview" style="margin-top:24px;">
+        <div class="p-title" style="font-size:18px; text-align:center;">16 個簡短的敘述<br>請依照你現在的感覺作答</div>
+        <div class="scale-preview" style="margin-top:22px;">
           <span style="font-size:12px; color:var(--ink-soft); margin-right:6px;">完全不像我</span>
           <div class="sp-circle" style="background:#D9CDBA;">1</div>
           <div class="sp-circle" style="background:#B79F7C;">2</div>
@@ -245,16 +245,17 @@
           <div class="sp-circle" style="background:var(--slate-deep);">4</div>
           <span style="font-size:12px; color:var(--ink-soft); margin-left:6px;">非常像我</span>
         </div>
-        <div class="p-body" style="color:var(--ink-soft); font-size:13px; text-align:center; margin-top:20px;">本測驗共 16 題，約 3–5 分鐘</div>
+        <div class="p-body" style="color:var(--ink-soft); font-size:13px; text-align:center; margin-top:18px;">本測驗共 16 題，約 3–5 分鐘</div>
       </div>
       <div class="folio">3</div>
     </section>
 
-    <!-- Q1-4 (4 questions each) -->
+    <!-- Q1-5 (3 questions each, last page has 4) -->
     <section class="page" data-page="q1"><div class="accent-wash" style="background:var(--slate);"></div><div class="page-content"><div class="qwrap" id="qpage-1"></div></div><div class="folio">4</div></section>
     <section class="page" data-page="q2"><div class="accent-wash" style="background:var(--slate);"></div><div class="page-content"><div class="qwrap" id="qpage-2"></div></div><div class="folio">5</div></section>
     <section class="page" data-page="q3"><div class="accent-wash" style="background:var(--slate);"></div><div class="page-content"><div class="qwrap" id="qpage-3"></div></div><div class="folio">6</div></section>
     <section class="page" data-page="q4"><div class="accent-wash" style="background:var(--slate);"></div><div class="page-content"><div class="qwrap" id="qpage-4"></div></div><div class="folio">7</div></section>
+    <section class="page" data-page="q5"><div class="accent-wash" style="background:var(--slate);"></div><div class="page-content"><div class="qwrap" id="qpage-5"></div></div><div class="folio">8</div></section>
 
     <!-- Result -->
     <section class="page result-wrap" data-page="result">
@@ -265,14 +266,14 @@
         <div class="result-story" id="resultStory"></div>
         <div class="result-combo" id="resultLead"></div>
       </div>
-      <div class="folio">8</div>
+      <div class="folio">9</div>
     </section>
 
     <!-- Qualities (strength / difficulty / try) -->
     <section class="page" data-page="qualities">
       <div class="accent-wash" style="background:var(--mauve);"></div>
       <div class="page-content" id="qualitiesCard" style="justify-content:center;"></div>
-      <div class="folio">9</div>
+      <div class="folio">10</div>
     </section>
 
     <!-- Map -->
@@ -282,7 +283,7 @@
         <p style="font-size:13px; color:var(--ink-soft); line-height:1.8; margin-bottom:18px;">這不是一個「你有多依附」的總分，只是這兩個維度，在你今天的回答裡呈現出來的樣子。</p>
         <div id="mapBars"></div>
       </div>
-      <div class="folio">10</div>
+      <div class="folio">11</div>
     </section>
 
     <!-- Reflect / closing + disclaimer -->
@@ -295,7 +296,7 @@
         <div class="p-title serif" style="font-size:17px; line-height:1.85; margin-bottom:20px;" id="reflectClose"></div>
         <div class="disclaimer" style="text-align:center;">這是你現在比較熟悉的靠近方式，不是你永遠的樣子。<br><br>依附模式可以隨著關係、經驗與生命事件改變。<br><br>本測驗參考成人依附研究與 ECR 的「依附焦慮 × 依附逃避」雙軸架構設計，僅供自我探索，不是正式心理量表或臨床診斷。</div>
       </div>
-      <div class="folio">11</div>
+      <div class="folio">12</div>
     </section>
 
     <!-- Scientific basis -->
@@ -304,7 +305,7 @@
         <div class="p-title" style="font-size:16px;">科學基礎</div>
         <p class="refs">本測驗的概念，受到成人依附研究的啟發，包含 John Bowlby 的依附理論、Mary Ainsworth 的早期依附研究、Cindy Hazan 與 Phillip Shaver 將依附理論延伸至成人親密關係的研究、Kim Bartholomew 與 Leonard Horowitz 的四類依附模型，以及 Brennan、Clark 與 Shaver 發展的 ECR／ECR-R「依附焦慮 × 依附逃避」雙軸架構。<br><br>本測驗並非官方 ECR 量表，僅概念性參考上述研究，未經臨床或心理計量驗證。</p>
       </div>
-      <div class="folio">12</div>
+      <div class="folio">13</div>
     </section>
 
     <!-- Email -->
@@ -315,7 +316,7 @@
 
         <!-- ConvertKit (Kit) official embed — form id 9779228 -->
         <script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
-        <form action="https://app.kit.com/forms/9779228/subscriptions" class="seva-form formkit-form" method="post" data-sv-form="9779228" data-uid="9809e05442zh" data-format="inline" data-version="5">
+        <form action="https://app.kit.com/forms/9779228/subscriptions" class="seva-form formkit-form" method="post" data-sv-form="9779228" data-uid="9809e05442zh2" data-format="inline" data-version="5">
           <div data-style="clean">
             <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul>
             <div data-element="fields" data-stacked="false" class="seva-fields formkit-fields">
@@ -330,7 +331,7 @@
 
         <button class="action-btn ghost" onclick="go(1)">暫時不用，稍後再說</button>
       </div>
-      <div class="folio">13</div>
+      <div class="folio">14</div>
     </section>
 
     <!-- Disclaimer / restart -->
@@ -340,7 +341,7 @@
         <div class="disclaimer" style="text-align:center;">本測驗提供自我探索娛樂使用，靈感來自成人依附研究與 ECR 的「依附焦慮 × 依附逃避」雙軸架構，但並非官方心理量表，也未經臨床或心理計量驗證。本體驗不能用於診斷或排除任何心理或身體健康狀況。</div>
         <button class="action-btn ghost" style="margin-top:20px;" onclick="restartQuiz()">重新測驗</button>
       </div>
-      <div class="folio">14</div>
+      <div class="folio">15</div>
     </section>
 
   </div>
@@ -380,7 +381,7 @@ const QUESTIONS = [
    ========================================================= */
 const ARCHETYPES = {
   secure:{
-    img:"../assets/characters/secure.png",
+    img:"secure.png",
     title:"安全型｜安心靠近",
     approach:"你通常能享受親密，也能保有自己的生活。關係出現變化時，你比較能相信彼此可以一起面對。",
     strength:"你能表達需要，也能尊重彼此的界線。親密對你而言，可以是依靠，也可以是自由。",
@@ -390,7 +391,7 @@ const ARCHETYPES = {
     formula:(a,v)=>((100-a)+(100-v))/2
   },
   anxious:{
-    img:"../assets/characters/anxious.png",
+    img:"anxious.png",
     title:"焦慮型｜渴望靠近",
     approach:"你很重視連結，也容易察覺關係裡細微的變化。當對方變得安靜，你可能很快開始尋找原因。",
     strength:"你通常很敏銳，也願意投入關係。你能感受到許多細節，也很在意對方的感受。",
@@ -400,7 +401,7 @@ const ARCHETYPES = {
     formula:(a,v)=>(a+(100-v))/2
   },
   avoidant:{
-    img:"../assets/characters/avoidant.png",
+    img:"avoidant.png",
     title:"逃避型｜保持距離",
     approach:"你可能很重視自主與自己的空間。當關係變得太靠近，或情緒變得太多，你容易先退一步。",
     strength:"你知道如何保有自己的生活，也可能很尊重對方的界線。",
@@ -410,7 +411,7 @@ const ARCHETYPES = {
     formula:(a,v)=>((100-a)+v)/2
   },
   fearful:{
-    img:"../assets/characters/fearful.png",
+    img:"fearful.png",
     title:"恐懼型｜靠近又退開",
     approach:"你可能同時渴望親密，也害怕受傷。關係太遠時不安，太近時又可能想退開。",
     strength:"你對親密有很深的感受力，也很渴望真正的連結。你的防備，有時也是保護自己的方式。",
@@ -449,8 +450,9 @@ const DOUBLE_COPY = {
   }
 };
 
-const PAGES = ['cover','concept','before','q1','q2','q3','q4','result','qualities','map','reflect','science','email','disclaimer'];
-const QPAGE_INDEX = { q1:0, q2:1, q3:2, q4:3 };
+const PAGES = ['cover','concept','before','q1','q2','q3','q4','q5','result','qualities','map','reflect','science','email','disclaimer'];
+const QPAGE_INDEX = { q1:0, q2:1, q3:2, q4:3, q5:4 };
+const SPLIT_SIZES = [3,3,3,3,4]; // 16 questions across 5 pages
 
 let order = [];       // shuffled question order for this session
 let answers = {};
@@ -466,15 +468,20 @@ function shuffledOrder(){
   }
   return arr;
 }
+function splitIntoPages(list, sizes){
+  const pages = []; let cursor = 0;
+  sizes.forEach(size=>{ pages.push(list.slice(cursor, cursor+size)); cursor += size; });
+  return pages;
+}
 try{
-  const savedOrder = JSON.parse(sessionStorage.getItem('attach_order_zh_v2') || 'null');
+  const savedOrder = JSON.parse(sessionStorage.getItem('attach_order_zh_v3') || 'null');
   order = Array.isArray(savedOrder) && savedOrder.length===16 ? savedOrder : shuffledOrder();
-  sessionStorage.setItem('attach_order_zh_v2', JSON.stringify(order));
-  answers = JSON.parse(sessionStorage.getItem('attach_answers_zh_v2') || '{}');
+  sessionStorage.setItem('attach_order_zh_v3', JSON.stringify(order));
+  answers = JSON.parse(sessionStorage.getItem('attach_answers_zh_v3') || '{}');
 }catch(e){ order = shuffledOrder(); answers = {}; }
 
 let orderedQuestions = order.map(id => QUESTIONS.find(q=>q.id===id));
-let QUESTION_PAGES = [0,1,2,3].map(i => orderedQuestions.slice(i*4, i*4+4));
+let QUESTION_PAGES = splitIntoPages(orderedQuestions, SPLIT_SIZES);
 
 /* =========================================================
    Navigation
@@ -556,7 +563,7 @@ function renderQuestionPage(pageIndex){
 }
 function setAnswer(qid, val){
   answers[qid] = val;
-  try{ sessionStorage.setItem('attach_answers_zh_v2', JSON.stringify(answers)); }catch(e){}
+  try{ sessionStorage.setItem('attach_answers_zh_v3', JSON.stringify(answers)); }catch(e){}
   const scaleEl = document.querySelector(`.scale[data-qid="${qid}"]`);
   if(scaleEl){
     scaleEl.querySelectorAll('.bubble-btn').forEach(btn=>{
@@ -567,7 +574,7 @@ function setAnswer(qid, val){
   }
   render();
 }
-[0,1,2,3].forEach(renderQuestionPage);
+[0,1,2,3,4].forEach(renderQuestionPage);
 
 /* =========================================================
    Scoring
@@ -607,8 +614,8 @@ function getResultPresentation(){
       title: `${p.title} × ${s.title}`,
       leadHTML: `<p style="margin-bottom:8px;">你的親密模式，可能同時靠近兩個方向。</p><p>${dc ? dc.lead : ''}</p>`,
       figureHTML: `
-        <img src="${p.img}" style="width:170px; left:8%; top:0; transform:rotate(-6deg); z-index:2;">
-        <img src="${s.img}" style="width:150px; right:2%; top:30px; transform:rotate(7deg); z-index:1;">`,
+        <img src="${p.img}" style="width:170px; left:8%; top:0; transform:rotate(-6deg); z-index:2;" onerror="this.style.display='none'">
+        <img src="${s.img}" style="width:150px; right:2%; top:30px; transform:rotate(7deg); z-index:1;" onerror="this.style.display='none'">`,
       storyHTML: '',
       qualitiesHTML: `
         <div class="gc-block"><div class="gc-label">你的優勢 · ${p.title}</div><p class="p-body" style="text-align:center;">${p.strength}</p></div>
@@ -621,8 +628,8 @@ function getResultPresentation(){
       title: `${p.title} × ${s.title}`,
       leadHTML: `你的親密模式較接近 <strong>${p.title}</strong>，同時你身上也帶著一些 <strong>${s.title}</strong> 的傾向。`,
       figureHTML: `
-        <img src="${p.img}" style="width:190px; left:50%; top:0; transform:translateX(-50%) rotate(-3deg); z-index:2;">
-        <img src="${s.img}" style="width:120px; right:0%; bottom:0; transform:rotate(8deg); z-index:1; opacity:0.9;">`,
+        <img src="${p.img}" style="width:190px; left:50%; top:0; transform:translateX(-50%) rotate(-3deg); z-index:2;" onerror="this.style.display='none'">
+        <img src="${s.img}" style="width:120px; right:0%; bottom:0; transform:rotate(8deg); z-index:1; opacity:0.9;" onerror="this.style.display='none'">`,
       storyHTML: p.approach,
       qualitiesHTML: `
         <div class="gc-block"><div class="gc-label">你的關係優勢</div><p class="p-body" style="text-align:center;">${p.strength}</p></div>
@@ -634,7 +641,7 @@ function getResultPresentation(){
       mode:'primary',
       title: p.title,
       leadHTML: `<span style="color:var(--ink-faint); font-size:12.5px;"><strong>${s.title}</strong> 的痕跡也悄悄出現在你的回答裡。</span>`,
-      figureHTML: `<img src="${p.img}" style="width:210px; left:50%; top:0; transform:translateX(-50%);">`,
+      figureHTML: `<img src="${p.img}" style="width:210px; left:50%; top:0; transform:translateX(-50%);" onerror="this.style.display='none'">`,
       storyHTML: p.approach,
       qualitiesHTML: `
         <div class="gc-block"><div class="gc-label">你的關係優勢</div><p class="p-body" style="text-align:center;">${p.strength}</p></div>
@@ -672,14 +679,14 @@ function renderMap(norm){
 function restartQuiz(){
   answers = {};
   try{
-    sessionStorage.removeItem('attach_answers_zh_v2');
-    sessionStorage.removeItem('attach_order_zh_v2');
+    sessionStorage.removeItem('attach_answers_zh_v3');
+    sessionStorage.removeItem('attach_order_zh_v3');
   }catch(e){}
   order = shuffledOrder();
-  try{ sessionStorage.setItem('attach_order_zh_v2', JSON.stringify(order)); }catch(e){}
+  try{ sessionStorage.setItem('attach_order_zh_v3', JSON.stringify(order)); }catch(e){}
   orderedQuestions = order.map(id => QUESTIONS.find(q=>q.id===id));
-  QUESTION_PAGES = [0,1,2,3].map(i => orderedQuestions.slice(i*4, i*4+4));
-  [0,1,2,3].forEach(renderQuestionPage);
+  QUESTION_PAGES = splitIntoPages(orderedQuestions, SPLIT_SIZES);
+  [0,1,2,3,4].forEach(renderQuestionPage);
   idx = 0; render();
 }
 
