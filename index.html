@@ -568,6 +568,9 @@ window.addEventListener('keydown', (e)=>{
 /* =========================================================
    Question rendering
    ========================================================= */
+function escapeAttr(str){
+  return String(str).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
 function renderQuestionPage(pageIndex){
   const questions = QUESTION_PAGES[pageIndex];
   const container = document.getElementById(`qpage-${pageIndex+1}`);
@@ -575,7 +578,7 @@ function renderQuestionPage(pageIndex){
     <div class="q-block">
       <div class="q-num">${String(q.displayNum).padStart(2,'0')}</div>
       <div class="q-zh">${q.zh}</div>
-      <div class="scale" data-qid="${q.id}" role="radiogroup" aria-label="${q.zh}">
+      <div class="scale" data-qid="${q.id}" role="radiogroup" aria-label="${escapeAttr(q.zh)}">
         ${[1,2,3,4].map(v => `
           <button type="button" class="bubble-btn ${answers[q.id]==v?'selected':''}" data-val="${v}" role="radio" aria-checked="${answers[q.id]==v}" onclick="setAnswer(${q.id}, ${v})">${v}</button>
         `).join('')}
