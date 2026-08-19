@@ -258,6 +258,7 @@
     <section class="page" data-page="q3"><div class="accent-wash" style="background:var(--slate);"></div><div class="page-content"><div class="qwrap" id="qpage-3"></div></div><div class="folio">6</div></section>
     <section class="page" data-page="q4"><div class="accent-wash" style="background:var(--slate);"></div><div class="page-content"><div class="qwrap" id="qpage-4"></div></div><div class="folio">7</div></section>
     <section class="page" data-page="q5"><div class="accent-wash" style="background:var(--slate);"></div><div class="page-content"><div class="qwrap" id="qpage-5"></div></div><div class="folio">8</div></section>
+    <section class="page" data-page="q6"><div class="accent-wash" style="background:var(--slate);"></div><div class="page-content"><div class="qwrap" id="qpage-6"></div></div><div class="folio">9</div></section>
 
     <!-- Result -->
     <section class="page result-wrap" data-page="result">
@@ -268,14 +269,14 @@
         <div class="result-story" id="resultStory"></div>
         <div class="result-combo" id="resultLead"></div>
       </div>
-      <div class="folio">9</div>
+      <div class="folio">10</div>
     </section>
 
     <!-- Qualities (strength / difficulty / try) -->
     <section class="page" data-page="qualities">
       <div class="accent-wash" style="background:var(--mauve);"></div>
       <div class="page-content" id="qualitiesCard" style="justify-content:center;"></div>
-      <div class="folio">10</div>
+      <div class="folio">11</div>
     </section>
 
     <!-- Map -->
@@ -290,8 +291,9 @@
         <div class="p-title" style="font-size:18px; text-align:center;">你的親密地圖</div>
         <p style="font-size:12.5px; color:var(--ink-soft); line-height:1.8; margin-bottom:16px; text-align:center;">這不是一個「你有多依附」的總分，只是這兩個維度，在你今天的回答裡呈現出來的樣子</p>
         <div id="mapBars"></div>
+        <button class="action-btn" id="saveResultBtn" onclick="saveResultImage()" style="margin-top:18px;">儲存結果 → 分享到限動</button>
       </div>
-      <div class="folio">11</div>
+      <div class="folio">12</div>
     </section>
 
     <!-- Reflect / closing + disclaimer -->
@@ -304,7 +306,7 @@
         <div class="p-title serif" style="font-size:16px; line-height:1.85; margin-bottom:18px;" id="reflectClose"></div>
         <div class="disclaimer" style="text-align:center;">這是你現在比較熟悉的靠近方式，不是你永遠的樣子。<br><br>依附模式可以隨著關係、經驗與生命事件改變。<br><br>本測驗參考成人依附研究與 ECR 的「依附焦慮 × 依附逃避」雙軸架構設計，僅供自我探索，不是正式心理量表或臨床診斷。</div>
       </div>
-      <div class="folio">12</div>
+      <div class="folio">13</div>
     </section>
 
     <!-- Scientific basis -->
@@ -313,7 +315,7 @@
         <div class="p-title" style="font-size:15px;">科學基礎</div>
         <p class="refs">本測驗的概念，受到成人依附研究的啟發，包含 John Bowlby 的依附理論、Mary Ainsworth 的早期依附研究、Cindy Hazan 與 Phillip Shaver 將依附理論延伸至成人親密關係的研究、Kim Bartholomew 與 Leonard Horowitz 的四類依附模型，以及 Brennan、Clark 與 Shaver 發展的 ECR／ECR-R「依附焦慮 × 依附逃避」雙軸架構。<br><br>本測驗並非官方 ECR 量表，僅概念性參考上述研究，未經臨床或心理計量驗證。</p>
       </div>
-      <div class="folio">13</div>
+      <div class="folio">14</div>
     </section>
 
     <!-- Email -->
@@ -339,7 +341,7 @@
 
         <button class="action-btn ghost" onclick="go(1)">暫時不用，稍後再說</button>
       </div>
-      <div class="folio">14</div>
+      <div class="folio">15</div>
     </section>
 
     <!-- Disclaimer / restart -->
@@ -349,7 +351,7 @@
         <div class="disclaimer" style="text-align:center;">本測驗提供自我探索娛樂使用，靈感來自成人依附研究與 ECR 的「依附焦慮 × 依附逃避」雙軸架構，但並非官方心理量表，也未經臨床或心理計量驗證。本體驗不能用於診斷或排除任何心理或身體健康狀況。</div>
         <button class="action-btn ghost" style="margin-top:18px;" onclick="restartQuiz()">重新測驗</button>
       </div>
-      <div class="folio">15</div>
+      <div class="folio">16</div>
     </section>
 
   </div>
@@ -359,6 +361,13 @@
     <div class="dots" id="dots"></div>
     <button class="nav-btn" id="nextBtn" aria-label="下一頁">›</button>
   </div>
+</div>
+
+<!-- Share overlay — shows the generated 9:16 result card for saving -->
+<div id="shareOverlay" style="display:none; position:fixed; inset:0; background:rgba(20,18,14,0.92); z-index:9999; align-items:center; justify-content:center; flex-direction:column; padding:24px;">
+  <img id="shareImg" alt="測驗結果卡片" style="max-width:88vw; max-height:70vh; border-radius:14px; box-shadow:0 24px 50px rgba(0,0,0,0.45); background:#fff;">
+  <p style="color:#fff; font-size:13px; margin-top:18px; text-align:center; line-height:1.7; font-family:'Noto Sans TC',sans-serif;">長按圖片，選擇「儲存到照片」<br>再到限時動態分享出去吧</p>
+  <button onclick="closeShareOverlay()" style="margin-top:14px; padding:11px 26px; border-radius:999px; border:none; background:#fff; color:#3A342A; font-weight:600; font-family:'Noto Sans TC',sans-serif; font-size:13.5px; cursor:pointer;">關閉</button>
 </div>
 
 <script>
@@ -462,9 +471,9 @@ const DOUBLE_COPY = {
 
 function linesToHTML(lines){ return lines.join('<br>'); }
 
-const PAGES = ['cover','concept','before','q1','q2','q3','q4','q5','result','qualities','map','reflect','science','email','disclaimer'];
-const QPAGE_INDEX = { q1:0, q2:1, q3:2, q4:3, q5:4 };
-const SPLIT_SIZES = [3,3,3,3,4]; // 16 questions across 5 pages
+const PAGES = ['cover','concept','before','q1','q2','q3','q4','q5','q6','result','qualities','map','reflect','science','email','disclaimer'];
+const QPAGE_INDEX = { q1:0, q2:1, q3:2, q4:3, q5:4, q6:5 };
+const SPLIT_SIZES = [3,3,3,3,3,1]; // 16 questions across 6 pages, last page holds Q16 alone
 
 let order = [];       // shuffled question order for this session
 let answers = {};
@@ -587,7 +596,7 @@ function setAnswer(qid, val){
   }
   render();
 }
-[0,1,2,3,4].forEach(renderQuestionPage);
+[0,1,2,3,4,5].forEach(renderQuestionPage);
 
 /* =========================================================
    Scoring
@@ -697,6 +706,196 @@ function renderMap(norm){
     </div>`;
 }
 
+/* =========================================================
+   Share result — renders a 9:16 result card to canvas and
+   shows it for the person to long-press-save (mobile-safe;
+   avoids relying on the unreliable iOS Safari <a download>).
+   ========================================================= */
+function getShareData(){
+  const { primary, secondary, gap, norm } = currentResult;
+  const p = primary.arche, s = secondary.arche;
+  if(gap < 8){
+    const dc = DOUBLE_COPY[pairKey(primary.key, secondary.key)];
+    return { mode:'dual', titleLines:[p.title, s.title], images:[p.img, s.img],
+      explanationLines: dc ? dc.leadLines : [], analysisLines: p.strengthLines, norm };
+  } else if(gap <= 25){
+    return { mode:'primary-secondary', titleLines:[p.title], subtitleLines:[`× ${s.title}`], images:[p.img],
+      explanationLines: p.approachLines, analysisLines: p.strengthLines, norm };
+  } else {
+    return { mode:'primary', titleLines:[p.title], images:[p.img],
+      explanationLines: p.approachLines, analysisLines: p.strengthLines, norm };
+  }
+}
+
+function roundRectPath(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);
+  ctx.arcTo(x+w,y,x+w,y+h,r);
+  ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r);
+  ctx.arcTo(x,y,x+w,y,r);
+  ctx.closePath();
+}
+
+async function generateShareCanvas(){
+  if(document.fonts && document.fonts.ready){ try{ await document.fonts.ready; }catch(e){} }
+  const W = 1080, H = 1920;
+  const canvas = document.createElement('canvas');
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = '#FBF6EA';
+  ctx.fillRect(0,0,W,H);
+
+  function loadImg(src){
+    return new Promise((resolve,reject)=>{
+      const img = new Image();
+      img.onload = ()=>resolve(img);
+      img.onerror = ()=>reject(new Error('image failed: '+src));
+      img.src = src;
+    });
+  }
+  function wrapLines(text, font, maxWidth){
+    ctx.font = font;
+    const isLatin = /^[\x00-\x7F\s"'\u201c\u201d\u2018\u2019\u2014\u2013\-.,!?:;()\u00d7]*$/.test(text);
+    if(isLatin){
+      const words = text.split(' ');
+      const lines = []; let cur = '';
+      words.forEach(w=>{
+        const test = cur ? cur+' '+w : w;
+        if(ctx.measureText(test).width > maxWidth && cur){ lines.push(cur); cur = w; }
+        else cur = test;
+      });
+      if(cur) lines.push(cur);
+      return lines;
+    } else {
+      const chars = Array.from(text);
+      const lines = []; let cur = '';
+      chars.forEach(c=>{
+        const test = cur + c;
+        if(ctx.measureText(test).width > maxWidth && cur){ lines.push(cur); cur = c; }
+        else cur = test;
+      });
+      if(cur) lines.push(cur);
+      return lines;
+    }
+  }
+  function drawCenteredLines(lines, font, color, lineHeight, startY){
+    ctx.font = font; ctx.fillStyle = color; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+    let y = startY;
+    lines.forEach(line=>{ ctx.fillText(line, W/2, y); y += lineHeight; });
+    return y;
+  }
+  function drawBar(label, value, yTop){
+    const barX = 130, barW = 820, barH = 22;
+    ctx.textAlign='left'; ctx.fillStyle='#3A342A'; ctx.font = "500 30px 'Noto Sans TC', sans-serif";
+    ctx.fillText(label, barX, yTop);
+    ctx.textAlign='right'; ctx.fillStyle='rgba(58,52,42,0.5)'; ctx.font="400 26px 'Noto Sans TC', sans-serif";
+    ctx.fillText(Math.round(value)+' / 100', barX+barW, yTop);
+    const trackY = yTop + 20;
+    ctx.fillStyle='rgba(58,52,42,0.08)';
+    roundRectPath(ctx, barX, trackY, barW, barH, barH/2); ctx.fill();
+    const grad = ctx.createLinearGradient(barX,0,barX+barW,0);
+    grad.addColorStop(0,'#5C7A99'); grad.addColorStop(1,'#C98FA0');
+    ctx.fillStyle = grad;
+    roundRectPath(ctx, barX, trackY, Math.max(barW*(value/100), barH), barH, barH/2); ctx.fill();
+  }
+
+  const data = getShareData();
+  let y = 130;
+
+  // logo
+  try{
+    const logo = await loadImg('logo.png');
+    const logoW = 260, logoH = logoW * (logo.height/logo.width);
+    ctx.drawImage(logo, (W-logoW)/2, y, logoW, logoH);
+    y += logoH + 70;
+  }catch(e){ y += 40; }
+
+  // character image(s)
+  const imgAreaTop = y;
+  if(data.mode === 'dual'){
+    try{
+      const [img1, img2] = await Promise.all([loadImg(data.images[0]), loadImg(data.images[1])]);
+      const w1 = 330, h1 = w1 * (img1.height/img1.width);
+      const w2 = 290, h2 = w2 * (img2.height/img2.width);
+      ctx.save(); ctx.translate(W/2 - 170, imgAreaTop); ctx.rotate(-5*Math.PI/180);
+      ctx.drawImage(img1, -w1/2, 0, w1, h1);
+      ctx.restore();
+      ctx.save(); ctx.translate(W/2 + 150, imgAreaTop + 40); ctx.rotate(5*Math.PI/180);
+      ctx.drawImage(img2, -w2/2, 0, w2, h2);
+      ctx.restore();
+      y = imgAreaTop + Math.max(h1, h2+40) + 60;
+    }catch(e){ y = imgAreaTop + 500; }
+  } else {
+    try{
+      const img = await loadImg(data.images[0]);
+      const w = 480, h = w * (img.height/img.width);
+      ctx.drawImage(img, (W-w)/2, imgAreaTop, w, h);
+      y = imgAreaTop + h + 60;
+    }catch(e){ y = imgAreaTop + 500; }
+  }
+
+  // title
+  const titleFont = "700 52px 'Noto Serif TC', serif";
+  if(data.mode === 'dual'){
+    y = drawCenteredLines([data.titleLines[0]], titleFont, '#3A342A', 66, y);
+    y = drawCenteredLines(['x'], "italic 400 34px 'Lora', serif", 'rgba(58,52,42,0.4)', 50, y+4);
+    y = drawCenteredLines([data.titleLines[1]], titleFont, '#3A342A', 66, y);
+  } else if(data.mode === 'primary-secondary'){
+    y = drawCenteredLines([data.titleLines[0]], titleFont, '#3A342A', 66, y);
+    y = drawCenteredLines([data.subtitleLines[0]], "500 34px 'Noto Sans TC', sans-serif", 'rgba(58,52,42,0.55)', 48, y+6);
+  } else {
+    y = drawCenteredLines([data.titleLines[0]], titleFont, '#3A342A', 66, y);
+  }
+  y += 50;
+
+  // explanation
+  y = drawCenteredLines(['結果解釋'], "600 24px 'Noto Serif TC', serif", '#3F5C79', 0, y);
+  y += 46;
+  const explLines = data.explanationLines.flatMap(t => wrapLines(t, "400 34px 'Noto Sans TC', sans-serif", 800));
+  y = drawCenteredLines(explLines, "400 34px 'Noto Sans TC', sans-serif", '#3A342A', 52, y);
+  y += 44;
+
+  // analysis
+  y = drawCenteredLines(['結果分析'], "600 24px 'Noto Serif TC', serif", '#3F5C79', 0, y);
+  y += 46;
+  const anaLines = data.analysisLines.flatMap(t => wrapLines(t, "400 34px 'Noto Sans TC', sans-serif", 800));
+  y = drawCenteredLines(anaLines, "400 34px 'Noto Sans TC', sans-serif", '#3A342A', 52, y);
+  y += 74;
+
+  // map
+  y = drawCenteredLines(['你的親密地圖'], "700 36px 'Noto Serif TC', serif", '#3A342A', 0, y);
+  y += 70;
+  drawBar('依附焦慮', data.norm.anxiety, y);
+  y += 110;
+  drawBar('依附逃避', data.norm.avoidance, y);
+  y += 130;
+
+  // footer
+  ctx.textAlign='center'; ctx.fillStyle='rgba(58,52,42,0.35)'; ctx.font="400 24px 'Noto Sans TC', sans-serif";
+  ctx.fillText('HUMAN SPACE · 親密關係測驗', W/2, H-70);
+
+  return canvas.toDataURL('image/png');
+}
+
+async function saveResultImage(){
+  const btn = document.getElementById('saveResultBtn');
+  const originalText = btn.textContent;
+  btn.disabled = true; btn.textContent = '產生中…';
+  try{
+    const dataUrl = await generateShareCanvas();
+    document.getElementById('shareImg').src = dataUrl;
+    document.getElementById('shareOverlay').style.display = 'flex';
+  }catch(e){
+    console.error(e);
+    alert('圖片產生失敗，請再試一次');
+  }finally{
+    btn.disabled = false; btn.textContent = originalText;
+  }
+}
+function closeShareOverlay(){ document.getElementById('shareOverlay').style.display = 'none'; }
+
 function restartQuiz(){
   answers = {};
   try{
@@ -707,7 +906,7 @@ function restartQuiz(){
   try{ sessionStorage.setItem('attach_order_zh_v4', JSON.stringify(order)); }catch(e){}
   orderedQuestions = order.map((id, i) => Object.assign({}, QUESTIONS.find(q=>q.id===id), { displayNum: i+1 }));
   QUESTION_PAGES = splitIntoPages(orderedQuestions, SPLIT_SIZES);
-  [0,1,2,3,4].forEach(renderQuestionPage);
+  [0,1,2,3,4,5].forEach(renderQuestionPage);
   idx = 0; render();
 }
 
